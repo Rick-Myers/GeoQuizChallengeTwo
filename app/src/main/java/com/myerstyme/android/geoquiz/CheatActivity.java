@@ -2,6 +2,7 @@ package com.myerstyme.android.geoquiz;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ public class CheatActivity extends AppCompatActivity {
 
     private Button mCheatButton;
     private TextView mAnswerTextView;
+    private TextView mApiTextView;
     private boolean mAnswerIsTrue;
     private boolean mCheatedIsTrue;
     private static final String EXTRA_ANSWER_IS_TRUE = "com.myerstyme.android.geoquiz.answer_is_true";
@@ -30,6 +32,10 @@ public class CheatActivity extends AppCompatActivity {
 
         mCheatButton = (Button) findViewById(R.id.showAnswerButton);
         mAnswerTextView = (TextView) findViewById(R.id.answerTextView);
+        mApiTextView = (TextView) findViewById(R.id.apiTextView);
+
+        String apiLevel = "API Level " + Build.VERSION.SDK_INT;
+        mApiTextView.setText(apiLevel);
 
         mCheatButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,28 +48,28 @@ public class CheatActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle saveInstanceState){
+    public void onSaveInstanceState(Bundle saveInstanceState) {
         saveInstanceState.putBoolean(INDEX_CHEATED_IS_TRUE, mCheatedIsTrue);
 
         //If the user cheated, save that state. If not, ignore as view will clear onCreate.
-        if(mCheatedIsTrue == true){
-            saveInstanceState.putBoolean(INDEX_ANSWER_IS_TRUE,mAnswerIsTrue);
+        if (mCheatedIsTrue == true) {
+            saveInstanceState.putBoolean(INDEX_ANSWER_IS_TRUE, mAnswerIsTrue);
         }
 
         super.onSaveInstanceState(saveInstanceState);
     }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState){
-        mCheatedIsTrue = savedInstanceState.getBoolean(INDEX_CHEATED_IS_TRUE,false);
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        mCheatedIsTrue = savedInstanceState.getBoolean(INDEX_CHEATED_IS_TRUE, false);
 
         //If the user has cheated, continue showing the answer.
-        if(mCheatedIsTrue == true){
+        if (mCheatedIsTrue == true) {
             setAnswerTextView(mAnswerIsTrue);
         }
     }
 
-    private void setAnswerTextView (boolean answerIsTrue){
+    private void setAnswerTextView(boolean answerIsTrue) {
         if (answerIsTrue)
             mAnswerTextView.setText(R.string.true_button);
         else
@@ -71,8 +77,7 @@ public class CheatActivity extends AppCompatActivity {
     }
 
 
-
-    private void setAnswerShownResult(boolean isAnswerShown){
+    private void setAnswerShownResult(boolean isAnswerShown) {
         Intent data = new Intent();
         data.putExtra(EXTRA_ANSWER_SHOWN, isAnswerShown);
         setResult(RESULT_OK, data);
@@ -84,7 +89,7 @@ public class CheatActivity extends AppCompatActivity {
         return i;
     }
 
-    public static boolean wasAnswerShown(Intent result){
+    public static boolean wasAnswerShown(Intent result) {
         return result.getBooleanExtra(EXTRA_ANSWER_SHOWN, false);
     }
 }
