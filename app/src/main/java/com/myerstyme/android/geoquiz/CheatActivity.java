@@ -14,7 +14,7 @@ public class CheatActivity extends AppCompatActivity {
     private Button mCheatButton;
     private TextView mAnswerTextView;
     private boolean mAnswerIsTrue;
-    private boolean mCheatedIsTrue = false;
+    private boolean mCheatedIsTrue;
     private static final String EXTRA_ANSWER_IS_TRUE = "com.myerstyme.android.geoquiz.answer_is_true";
     private static final String EXTRA_ANSWER_SHOWN = "com.myerstyme.android.geoquiz.answer_shown";
     private static final String INDEX_CHEATED_IS_TRUE = "CheatIsTrue";
